@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/)
-- [Pan Gesture](https://docs.swmansion.com/react-native-gesture-handler/docs/api/gestures/tap-gesture)
+- [Tap Gesture](https://docs.swmansion.com/react-native-gesture-handler/docs/api/gestures/tap-gesture)
 - [Pinch Gesture](https://docs.swmansion.com/react-native-gesture-handler/docs/api/gestures/pinch-gesture#example)
 - [Create Card](https://v1.tailwindcss.com/components/cards)
 
