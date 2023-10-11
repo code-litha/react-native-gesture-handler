@@ -3,52 +3,53 @@ import backgroundImg from "./assets/bg.png";
 import characterImg from "./assets/mametchi.png";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
+  GestureHandlerRootView,
   Gesture,
   GestureDetector,
-  GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import { useState } from "react";
-import BaseCard from "./components/BaseCard";
+import Card from "./components/Card";
 
 export default function App() {
-  // let scale = 1;
   const [scale, setScale] = useState(1);
   const [savedScale, setSavedScale] = useState(1);
 
-  const singleTap = Gesture.Tap().onStart(() => {
-    Alert.alert("Single Tap nih");
-  });
-
-  const doubleTap = Gesture.Tap()
-    .numberOfTaps(2)
-    .onStart(() => {
-      Alert.alert("Double Tap nih");
-      // hit endpoint bookmarks => simpan / hapus bookmarks
-    });
-
   const cubit = Gesture.Pinch()
     .onUpdate((event) => {
-      // console.log(event, "<<< event on Start");
-      // scale = event.scale;
+      console.log(event.scale, "<<< scale habis di cubit");
       setScale(event.scale * savedScale);
-      // Alert.alert("Cubit nih");
     })
     .onEnd(() => {
       setSavedScale(scale);
     });
 
-  const gestureComposed = Gesture.Exclusive(cubit, doubleTap, singleTap);
+  const doubleTap = Gesture.Tap()
+    .numberOfTaps(2)
+    .onStart(() => {
+      // Alert.alert("Double Tap nih");
+      setScale(1);
+      setSavedScale(1);
+    });
 
+  const gestureCompose = Gesture.Exclusive(cubit, doubleTap);
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.containerSafeArea}>
-        <BaseCard></BaseCard>
-
+        <Card />
         {/* <GestureHandlerRootView style={{ flex: 1 }}>
           <ImageBackground source={backgroundImg} style={styles.background}>
             <Text style={styles.topText}>TamaGotchiApp</Text>
-            <GestureDetector gesture={gestureComposed}>
-              <Image source={characterImg} style={{ transform: [{ scale }] }} />
+            <GestureDetector gesture={gestureCompose}>
+              <Image
+                source={characterImg}
+                style={{
+                  transform: [
+                    {
+                      scale: scale,
+                    },
+                  ],
+                }}
+              />
             </GestureDetector>
           </ImageBackground>
         </GestureHandlerRootView> */}
@@ -62,8 +63,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "#5C3526",
     backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
   background: {
     flex: 1,
